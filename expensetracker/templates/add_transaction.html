@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+    <h1 class="text-center">Add Transaction</h1>
+    <form action="{% url 'add_transaction' %}" method="post" class="mt-5">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center">
+            <input class="btn btn-primary btn-lg mt-4" type="submit" value="Add Transaction">
+        </div>
+    </form>
+{% endblock %}

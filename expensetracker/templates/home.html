@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+<!-- Balance Section -->
+<div class="card balance m-auto mt-5">
+    <div class="card-body text-center">
+        Balance <strong>{{ balance }}€</strong>
+    </div>
+</div>
+
+<!-- Transaction Section -->
+<section class="transaction container-fluid">
+    <h1 class="text-center mt-5">Transaction</h1>
+    <div class="text-center mt-5">
+        <a href="{% url 'add_transaction' %}" class="btn add-transaction">Add Transaction</a>
+        <a href="{% url 'add_category' %}" class="btn">Create Category</a>
+    </div>
+    <div class="container">
+       <div class="table-responsive">
+        <table class="table mt-5 text-center">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in page_obj %}
+                    <tr>
+                        <td>{{ transaction.transaction_type }}</td>
+                        <td>{{ transaction.date }}</td>
+                        <td>{{ transaction.category.name }}</td>
+                        <td>{{ transaction.amount }}€</td>
+                        <td>{{ transaction.description }}</td>
+                        <td><a href="{% url 'edit_transaction' pk=transaction.id %}"
+                            class="btn btn-sm edit">Edit</a>
+                            <a href="{% url 'delete_transaction' pk=transaction.id %}"
+                            class="btn btn-sm danger">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No transactions found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       </div>
+       {% include 'pagination.html' %}
+    </div>
+</section>
+{% endblock content %}
